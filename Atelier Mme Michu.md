@@ -10,10 +10,7 @@ Résous ce problème pour permettre à Windows de démarrer normalement.
 
 ### SOLUTION ETAPE 1 
 
-Première chose , 
-
-Vérifier le premier périphérique de démarrage
-J'utilise la touche F12 pour vérifier le bootdevice , tout me semble en ordre.
+J'ai boot dans l'EFI, rien à signaler et vérifier les bootdevis sur VBOX
 
 ![alt text](image-16.png)
 ![alt text](image-18.png)
@@ -23,9 +20,10 @@ J'essaye de lancer l'outil de redémarrage systeme pour une tentative de répara
 
 ![alt text](image-14.png)
 
-ECHEC 
+C'est un ECHEC.
 
-je teste une réparation manuelle via CMD : 
+
+je tente une réparation manuelle via CMD : 
 
 lancement de diskpart : 
 
@@ -44,11 +42,7 @@ tentative de la réinstallation en conservant les données
 ![alt text](image-23.png)
 
 
-Solution 1 : Déconnecter tous les périphériques externes. OK mais échec 
-Solution 2 : Vérifier le premier périphérique de démarrage ok mais échec
-Solution 3 : Mettre à jour le BIOS , impossible UEFI
-Solution 4 : Réparer le secteur de démarrage , test ok , impossible à démarrer
-Solution 5 : Reconstruire le MBR.
+
 
 réparer le boot mgr via invite de commande , échec ! 
 ![alt text](image-24.png)
@@ -68,12 +62,12 @@ OS device m'indique la letre du lecteur de windows ; ici c'est E:
 
 ![alt text](image-29.png)
 
-deuxième problème : manque winnload.exe 
+# deuxième problème : manque winnload.exe 
 
 ![alt text](image-30.png)
 
 
-1- test 1 outil de remarrage systeme auto avec windows 10 à plusieurs reprises :
+1- test avec l'outil de remarrage systeme auto avec windows 10 à plusieurs reprises :
 boot OK 
 ![alt text](image-31.png)
 
@@ -89,6 +83,7 @@ Il y a plusieurs solutions je pense, mais si tu arrives à restaurer les perform
 
 ### SOLUTION ETAPE 2
 
+![alt text](image-44.png)
 ![alt text](image-34.png)
 ![alt text](image-33.png)
 ![alt text](image-35.png)
@@ -97,7 +92,17 @@ Il y a plusieurs solutions je pense, mais si tu arrives à restaurer les perform
 je force la fermeture des processs ping.exe
 taskkill /F /IM ping.exe
 
-perfomance pc après le kill de ping.exe
+perfomance pc après le kill de ping.exe pour avoir un peu de ressources pour bosser ! 
+
+vérification de startup shell 
+
+C:\Users\Mme Michu\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+shell:startup via Exécuter 
+
+script qui lance des pings en continu , suppression du script et redemarrage de la machine
+
+![alt text](image-45.png)
+
 
 
 ![alt text](image-40.png)
@@ -120,10 +125,9 @@ je suis passer par CMD , puis diskPart et ensuite san pour mettre tout les disqu
 
 ![alt text](image-41.png)
 
-vérification des deux disques pour corriger les erreurs "DONE" :  
+vérification des deux disques pour corriger les erreurs, ok  :  
 
 ![alt text](image-42.png)
-
 
 
 
