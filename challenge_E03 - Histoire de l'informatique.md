@@ -42,7 +42,7 @@ Il existe de nombreuses ressources en ligne — **YouTube** est une excellente p
 
 ### Vue intérieure : 
 
-![alt text](<PC fixe-1.jpg>)
+![alt text](<images/PC fixe-1.jpg>)
 
 ## 🧩 Configuration complète
 
@@ -61,6 +61,6 @@ Il existe de nombreuses ressources en ligne — **YouTube** est une excellente p
 ### Vue des connecteurs : 
 ![alt text](<images/connecteur arrière PC-1.jpg>)
 
-![alt text](image.png)
+![alt text](/images/image.png)
 
 ---
