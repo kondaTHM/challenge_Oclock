@@ -59,7 +59,7 @@ Il existe de nombreuses ressources en ligne — **YouTube** est une excellente p
 | 💽 **Disque dur (HDD)** | Western Digital WD10JUCT-63CYNY0 1 To SATA | Disque dur mécanique pour le stockage supplémentaire |
 
 ### Vue des connecteurs : 
-![alt text](<connecteur arrière PC-1.jpg>)
+![alt text](<images/connecteur arrière PC-1.jpg>)
 
 ![alt text](image.png)
 
