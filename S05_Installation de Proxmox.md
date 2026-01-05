@@ -1,4 +1,4 @@
-# SA5E02 - SB1E01 - Introduction
+# SB1E01 - Introduction
 
 ## Installation de Proxmox VE sur VMware Workstation
 
