@@ -67,5 +67,5 @@ Indiquez l'hôte sur lequel la VM vCenter sera déployée :
 ## 3. Fin du Stage 1
 Le déploiement de l'appareil est lancé. Une fois la barre de progression terminée, le Stage 1 est validé, noté l'adresse qui est indiqué à la fin du stage 1.
 
-![alt text](images/image-104.png)
+![alt text](images/image-106.png)
 
