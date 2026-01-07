@@ -69,3 +69,60 @@ Le déploiement de l'appareil est lancé. Une fois la barre de progression termi
 
 ![alt text](images/image-106.png)
 
+
+## 4. Étape 2 : Configuration de l'appareil (Stage 2)
+
+### Ouverture de la console de la VM VMware Vcenter Server 
+
+![alt text](images/image-108.png)
+
+### Ouverture de la page de la VM VMware Vcenter Server et cliquer sur installation
+
+![alt text](images/image-107.png)
+
+![alt text](images/image-109.png)
+
+### verifier que les paramètres sont corrects : 
+
+![alt text](images/image-110.png)
+
+
+### configuration du SSO Vcenter : 
+
+* *Info : Le SSO de Vcenter est un SSO intégré avec son propre domaine car les différentes briques "déploiement, stockages, inventaires..." doivent pouvoir s'authentifier entre elles .*
+
+* MEttre le même domaine
+* Choisir un mot de passe
+
+### Configurer le CEIP , au choix , si du test, pas besoin : 
+
+![alt text](images/image-111.png)
+
+
+### verifier que les paramètres sont corrects 
+
+![alt text](images/image-112.png)
+
+### lancer la configuration du stage 2 : 
+
+![alt text](images/image-113.png)
+
+### Fin de configuration du stage 2 : 
+
+![alt text](images/image-114.png)
+
+### Lancement de VSPHERE CLIENT , utiliser les logins du SSO : 
+
+* nom de domain: XXXXX
+* login :administrator@NOMDUDOMAIN
+* mdp : XXXXXXX
+
+![alt text](images/image-115.png)
+
+### Fin du stage 2  : 
+
+* appliance de management joignable et fonctionnelle
+
+* console d'administration de VCENTER joignable et fonctionnelle
+
+![alt text](images/image-116.png)
