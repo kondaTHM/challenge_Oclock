@@ -126,3 +126,57 @@ Le déploiement de l'appareil est lancé. Une fois la barre de progression termi
 * console d'administration de VCENTER joignable et fonctionnelle
 
 ![alt text](images/image-116.png)
+
+--------------------------------------------------
+
+### Création d’un Cluster 
+
+# Procédure : Création d'un Cluster vSphere
+
+## 1. Accéder à l’assistant de création du cluster
+1. Dans l’inventaire vSphere, effectuez un **clic droit** sur le **Datacenter**.
+2. Sélectionnez **Nouveau cluster…**
+3. L’interface de paramétrage du cluster apparaît.
+
+![alt text](images/image-117.png)
+
+---
+
+## 2. Paramétrer les options du cluster
+À ce stade, nous **n’activons pas** les options suivantes (elles seront configurées ultérieurement) :
+
+* **vSphere DRS (Distributed Resource Scheduler) :** Permet de répartir automatiquement la charge de travail entre les hôtes du cluster afin d’optimiser les performances et l’utilisation des ressources.
+* **vSphere HA (High Availability) :** Assure la haute disponibilité en redémarrant automatiquement les machines virtuelles sur un autre hôte en cas de défaillance d’un serveur ESXi.
+* **vSAN (Virtual Storage Area Network) :** Combine automatiquement les disques locaux de chaque hôte ESXi pour créer un seul datastore partagé.
+
+![alt text](images/image-118.png)
+
+### Étapes de configuration :
+1. Renseigner le **nom du cluster**.
+2. Cocher **Créer une image**.
+3. Choisir **Gérer la configuration au niveau du cluster** :
+    > **Note sur l'impact :** Cette option applique la configuration logicielle (ESXi, drivers, firmware) à l’ensemble des hôtes du cluster. Toute erreur de configuration sera répliquée sur tous les nœuds.
+4. Cliquer sur **Suivant**.
+
+![alt text](images/image-119.png)
+
+* Cliquer sur **Suivant**.
+
+## 4. Compte rendu
+Un récapitulatif apparaît :
+1. Vérifier les paramètres.
+2. Valider pour finaliser la configuration.
+
+![alt text](images/image-120.png)
+
+> **Résultat :** Le cluster est maintenant créé et visualisable dans l’interface.
+
+---
+
+## 5. Ajouter les nœuds au cluster créé
+1. Depuis l’inventaire, **glisser-déposer** les hôtes ESXi dans le cluster.
+2. Les hôtes héritent automatiquement de la configuration définie au niveau du cluster.
+
+![alt text](images/image-121.png)
+
+![alt text](images/image-122.png)
