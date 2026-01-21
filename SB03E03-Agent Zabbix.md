@@ -43,13 +43,13 @@ https://www.zabbix.com/documentation/current/en/manual/config/items/itemtypes/za
 ![alt text](images/image-154.png)
 
 
-## Mise en place d'un trigger  :
-
 ![alt text](images/image-155.png)
 
 > test de l'item , c'est ok ! 
 
 ![alt text](images/image-156.png)
+
+## Mise en place d'un TRIGGER  :
 
 3. création du trigger sur la machine windows 
 
