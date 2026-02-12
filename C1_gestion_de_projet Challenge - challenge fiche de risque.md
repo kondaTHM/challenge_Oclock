@@ -1,72 +1,48 @@
+# Plan de Continuité et de Reprise d'Activité (PCA/PRA) - Campus IT
 
-# challenge E03
-
-## Énoncé
-
-### Contexte
-
-Vous êtes responsable de l'informatique au sein d'un campus de formation professionnelle (en présentiel 😁).
-
-Le campus compte en permanence environ 500 personnes, entre les salariés (une quinzaine), les formateurs (freelances, formateurs occasionnels) et les apprenants (formation continue et alternance).
-
-La direction vous demande de moderniser l’infrastructure IT du campus pour accueillir de nouveaux services numériques : serveurs fichiers, NAS, firewall, VLAN et accès sécurisé Wi-Fi.
-
-Dans votre service, vous accueillez actuellement un alternant.
-
-### Consignes
-
-Vous avez créé la note de cadrage du projet ainsi que le WBS.
-
-Aujourd'hui on s'attaque à l'analyse des risques !
-
-1. Listez au moins 10 risques du projet (technique, humain, organisationnel)
-2. Évaluez chaque risque :
-    * Probabilité : faible/moyenne/forte
-    * Impact : faible/moyen/critique
-    * Criticité = probabilité × impact
-3. Classez les risques par criticité
-
-**Livrable attendu** : registre des risques avec évaluation
-
-### Notes
-
-* Vous pouvez utiliser les outils de votre choix pour le registre
-* Gardez bien le fichier, ça peut toujours servir !
-* Prenez le temps de chercher de la documentation sur le sujet
-
-# MON RENDU
-
-Voici mon document qui présente l'analyse des risques liée au projet de modernisation de l'infrastructure (Serveurs, NAS, Firewall, VLAN, Wi-Fi).
-
-## 1. Échelle d'Évaluation
-- **Probabilité :** Faible (1), Moyenne (2), Forte (3)
-- **Impact :** Faible (1), Moyen (2), Critique (3)
-- **Criticité :** Probabilité × Impact
-
-## 2. Tableau des Risques (Classé par Criticité)
-
-| ID | Catégorie | Risque Identifié | Probabilité | Impact | Criticité |
-| :--- | :--- | :--- | :---: | :---: | :---: |
-| **R01** | Technique | Perte de données lors de la migration (WBS 1.3) | 2 | 3 | **6** |
-| **R02** | Humain | Erreur de configuration / Manque de formation alternant (WBS 5.1) | 3 | 2 | **6** |
-| **R03** | Technique | Coupure totale internet/réseau lors de la bascule (WBS 3 & 4) | 2 | 3 | **6** |
-| **R04** | Technique | Incompatibilité matérielle ou logicielle (OS/AD) (WBS 1.2) | 2 | 2 | **4** |
-| **R05** | Organisation | Retard de livraison des équipements (Serveur/Switchs) | 2 | 2 | **4** |
-| **R06** | Technique | Mauvaise segmentation VLAN (Accès non autorisés) (WBS 4.1) | 1 | 3 | **3** |
-| **R07** | Organisation | Sous-estimation de l'espace de stockage NAS (WBS 2.1) | 2 | 1 | **2** |
-| **R08** | Humain | Résistance des utilisateurs aux nouveaux accès Wi-Fi | 2 | 1 | **2** |
-| **R09** | Technique | Échec des tests d'intrusion (Vérification sécurité) (WBS 3.3) | 1 | 2 | **2** |
-| **R10** | Organisation | Documentation technique obsolète ou incomplète (WBS 5.2) | 1 | 2 | **2** |
+**Document de référence :** Stratégie de résilience post-modernisation.
+**Périmètre :** Infrastructure virtualisée (Proxmox), Stockage (TrueNAS), Réseau (pfSense/Aruba).
 
 ---
 
-## 3. Stratégies d'Atténuation (Top 3)
+## 1. Scénario d'incident majeur : Rupture d'infrastructure hôte
+* **Nature de l'incident :** Panne matérielle critique sur l'hôte de virtualisation principal (**Proxmox VE**).
+* **Impact métier :** Interruption de l'Active Directory, du service DNS et du serveur de fichiers partagé.
+* **Conséquences :** Indisponibilité immédiate de l'authentification réseau et des ressources pédagogiques pour les 500 usagers du campus.
 
-### R01 - Perte de données
-* **Action :** Sauvegarde complète (3-2-1) avant migration + Test de restauration.
+---
 
-### R02 - Erreur de l'alternant
-* **Action :** Mise en place d'un environnement de pré-production (Lab) + Revue de configuration systématique.
+## 2. Dispositif de réponse et de reprise
 
-### R03 - Coupure réseau
-* **Action :** Réalisation des travaux critiques en heures non-ouvrées + Procédure de "Rollback" prête.
+### A. Mesures de prévention et de détection
+* **Politique de sauvegarde (Règle 3-2-1) :** Sauvegardes journalières via **Veeam Backup & Replication** vers une cible **TrueNAS** isolée physiquement.
+* **Surveillance proactive :** Supervision via **Zabbix** avec seuils d'alertes sur les indicateurs de santé matérielle (température, SMART des disques, charge CPU).
+* **Protection électrique :** Onduleur (UPS) géré par le service **NUT** (Network UPS Tools) pour assurer un arrêt sécurisé des VMs en cas de coupure prolongée.
+
+### B. Procédure de rétablissement (Plan de Reprise)
+1. **Initialisation :** Diagnostic de la panne et déclaration de l'incident majeur auprès de la direction.
+2. **Priorisation :** Restauration immédiate du **Contrôleur de Domaine (AD)** via la fonction *Instant VM Recovery* de Veeam pour rétablir les accès Wi-Fi et les sessions.
+3. **Restauration secondaire :** Remontage du serveur de fichiers et vérification de l'intégrité des partages réseau.
+4. **Validation réseau :** Audit rapide des tables de routage sur le firewall **pfSense** et de la segmentation **VLAN** sur les switchs Aruba.
+
+### C. Objectifs de service (SLA)
+* **RTO (Recovery Time Objective) :** Temps de rétablissement cible de **4 heures** pour les services critiques.
+* **RPO (Recovery Point Objective) :** Perte de données maximale de **24 heures** (basée sur la sauvegarde de la veille).
+
+---
+
+## 3. Indicateurs de performance et de succès (KPI)
+* **Taux de disponibilité :** Validation du retour en ligne des services AD et DNS.
+* **Intégrité applicative :** Tests de cohérence sur les bases de données et les droits d'accès fichiers.
+* **Qualité de service :** Absence d'incidents résiduels lors de la reconnexion simultanée des apprenants.
+
+---
+
+## 4. Matrice de responsabilité du PRA
+
+| Phase | Action Technique | Responsable | Outil |
+| :--- | :--- | :--- | :--- |
+| **Détection** | Analyse des alertes et logs critiques | Alternant IT | Zabbix / Grafana |
+| **Bascule** | Restauration des VMs sur hôte de secours | Responsable IT | Veeam / Proxmox |
+| **Réseau** | Vérification de la propagation des VLANs | Responsable IT | pfSense / Aruba |
+| **Contrôle** | Tests de recette (connexion utilisateur test) | Alternant IT | Poste Client |
