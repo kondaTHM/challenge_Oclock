@@ -107,12 +107,12 @@ user@serverradius:~$ sudo nano /etc/samba/smb.conf
 ### 3. Ajouter le serveur à l'AD
 
 ```bash
-user@serverradius:~$ sudo net ads joint -U Administrateur
+user@serverradius:~$ sudo net ads join -U Administrateur
 
 ```
 
 > **RESULTATS ATTENDUS**
-> - La commande net ads joint affiche des messages **joigned**
+> - La commande net ads join affiche des messages **joigned**
 
 ![alt text](images/image-195.png)
 
