@@ -91,6 +91,7 @@ L'intégration repose sur l'utilisation de **Samba** et **Winbind** pour permett
 
 ```bash
 sudo apt install samba winbind libpam-winbind libnss-winbind
+sudo apt install krb5-user
 ```
 ### 2. Configuration de Samba
 Avant de modifier les fichiers de configuration, une sauvegarde de l'original est effectuée par sécurité :
@@ -143,11 +144,50 @@ ntlm_auth = "/usr/bin/ntlm_auth --request-nt-key --allow-mschapv2 --username=%{m
 
 ![alt text](images/image-188.png)
 
+
 4. création d'un user sur l'AD : jbob
 
 ![alt text](images/image-196.png)
 
-5. Test de connection 
+5. Vérification que Winbind est fonctionnel ainsi que kerberos 
+
+```bash
+kinit Administrateur
+```
+
+> RESULTATS ATTENDUS
+
+![alt text](images/image-200.png)
+
+
+```bash
+klist
+```
+
+> RESULTATS ATTENDUS
+
+![alt text](images/image-201.png)
+
+
+```bash
+wbinfo -u
+```
+
+> RESULTATS ATTENDUS
+
+![alt text](images/image-202.png)
+
+
+```bash
+wbinfo -g
+```
+
+> RESULTATS ATTENDUS
+
+![alt text](images/image-203.png)
+
+
+6. Test de connection 
 
 ```bash
 radtest -t mschap jbob "MDP de l'AD" localhost 0 testing123
