@@ -8,7 +8,7 @@ services:
     volumes:
        - db_data:/var/lib/mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${GLPI_DB_NAME}
       MYSQL_USER: ${GLPI_DB_USER}
       MYSQL_PASSWORD: ${GLPI_DB_PASSWORD}
