@@ -1,0 +1,61 @@
+version: '3.8'          # ou plus récent
+
+
+services:
+  db:                   # service MariaDB
+    image: mariadb:12.3.1-ubi10-rc
+    deploy:
+      replicas: 1             # ← IMPORTANT : toujours 1 seul replica pour la BDD
+      placement:
+        constraints:
+          - node.role == manager   # force la BDD sur le nœud manager
+    # ... reste de la config inchangée
+    restart: "unless-stopped"
+    volumes:
+       - db_data:/var/lib/mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${GLPI_DB_NAME}
+      MYSQL_USER: ${GLPI_DB_USER}
+      MYSQL_PASSWORD: ${GLPI_DB_PASSWORD}
+    networks:
+        - backend
+
+  glpi:                 # service GLPI
+    image: diouxx/glpi  # ou glpi/glpi:latest
+
+    deploy:
+      replicas: 3             # ← nombre d'instances GLPI
+      restart_policy:
+        condition: on-failure
+
+    volumes:
+      - glpi_data:/var/glpifrontend
+
+    env_file: .env # pour mettre les fichiers d'environnements comme le pass 
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+    networks:
+      - backend
+      - frontend
+
+  adminer:              # (bonus) interface d'admin BDD
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
+    networks:
+      - backend
+      
+
+volumes:               # déclaration des volumes nommés
+   glpi_data:
+   db_data:
+
+networks:              # réseau dédié
+  frontend:
+     driver: bridge
+  backend:
+     driver: bridge
